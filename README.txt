@@ -1,28 +1,15 @@
-MEIN BUDGET – iPhone-Web-App
+MEIN BUDGET – Version mit Fixkosten
 
-In das Stammverzeichnis (root) deines GitHub-Repositories gehören:
+Dateien für das Stammverzeichnis (root) deines GitHub-Repositories:
 index.html, app.js, manifest.json, sw.js, icon-192.png, icon-512.png.
 
-GitHub Pages:
-1. Repository öffnen → Settings → Pages.
-2. Bei Build and deployment „Deploy from a branch“ wählen.
-3. Branch main, Ordner /(root) wählen und speichern.
-4. Die veröffentlichte URL wird in Settings → Pages angezeigt.
+NEU: Fixkosten einmal eintragen; sie werden monatlich in der Übersicht eingeplant.
+Die App bucht Fixkosten NICHT automatisch als bezahlt, damit Ausgaben nicht doppelt gezählt werden.
+Die Übersicht zeigt Monatsbudget minus geplante Fixkosten als Planwert und gebuchte Ausgaben separat.
 
-Auf dem iPhone:
-1. Veröffentlichte URL in Safari öffnen.
-2. Teilen → Zum Home-Bildschirm.
-3. Für Offline-Nutzung nach dem ersten Online-Laden erneut öffnen.
+Update: Backup deiner bisherigen Daten exportieren. Danach die sechs Dateien aus diesem ZIP
+im Repository ersetzen/hochladen. sw.js verwendet den neuen Cache mein-budget-cache-v4.
+App anschließend einmal mit Internet öffnen und bei Bedarf Safari schließen und erneut öffnen.
 
-Funktionen dieser Version:
-- Neon-grünes Design auf dunklem Hintergrund nach der Bildvorlage.
-- Untere Navigation: Übersicht, Sparen, Budget, Schulden und Mehr.
-- Einzelne Buchungen über „Bearbeiten“ ändern oder über „Löschen“ entfernen; andere Daten bleiben erhalten.
-- Sparziele, Schulden, Monatsbudgets sowie Backup-Export und -Import.
-- Offline-Nutzung nach dem ersten Laden über GitHub Pages.
-
-Datenschutz/Backup:
-Finanzdaten liegen im lokalen Browser-Speicher und werden nicht an GitHub gesendet.
-Die Dateien im öffentlichen Repository sind öffentlich sichtbar. Unter „Mehr“ regelmäßig
-„Backup exportieren“ verwenden. Beim Löschen von Safari-Website-Daten können lokale
-Daten verloren gehen. Die App verbindet sich nicht mit einem Bankkonto.
+Daten werden lokal im Browser gespeichert. Bestehende Buchungen, Sparziele, Schulden und Budgets
+bleiben bei einem normalen Datei-Update erhalten. Vorher trotzdem ein Backup exportieren.

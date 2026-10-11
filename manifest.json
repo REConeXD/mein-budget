@@ -1,11 +1,11 @@
 {
   "name": "Mein Budget",
   "short_name": "Budget",
-  "description": "Persönliche Budget-, Spar- und Schuldenübersicht",
+  "description": "Persönliche Budget-, Spar-, Fixkosten- und Schuldenübersicht",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#050b10",
-  "theme_color": "#050b10",
+  "background_color": "#07100d",
+  "theme_color": "#07100d",
   "lang": "de"
 }
