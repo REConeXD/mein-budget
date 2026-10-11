@@ -14,6 +14,13 @@ Auf dem iPhone:
 2. Teilen → Zum Home-Bildschirm.
 3. Für Offline-Nutzung nach dem ersten Online-Laden erneut öffnen.
 
+Funktionen dieser Version:
+- Neon-grünes Design auf dunklem Hintergrund nach der Bildvorlage.
+- Untere Navigation: Übersicht, Sparen, Budget, Schulden und Mehr.
+- Einzelne Buchungen über „Bearbeiten“ ändern oder über „Löschen“ entfernen; andere Daten bleiben erhalten.
+- Sparziele, Schulden, Monatsbudgets sowie Backup-Export und -Import.
+- Offline-Nutzung nach dem ersten Laden über GitHub Pages.
+
 Datenschutz/Backup:
 Finanzdaten liegen im lokalen Browser-Speicher und werden nicht an GitHub gesendet.
 Die Dateien im öffentlichen Repository sind öffentlich sichtbar. Unter „Mehr“ regelmäßig

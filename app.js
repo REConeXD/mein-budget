@@ -27,11 +27,19 @@ function renderOverview(){
  if(!recent.length)return empty($('recent-list'),'Noch keine Buchungen. Erfasse deine erste Einnahme oder Ausgabe unter Budget.');
  $('recent-list').innerHTML=recent.map(t=>`<div class="item"><div class="item-main"><div class="item-title">${esc(t.title)}</div><div class="item-sub">${esc(t.category)} · ${esc(t.date)}</div></div><strong class="${t.type==='income'?'green':'red'}">${t.type==='income'?'+':'−'}${money(t.amount)}</strong></div>`).join('');
 }
+function openEditTransaction(transactionId){
+ const t=data.transactions.find(x=>x.id===transactionId); if(!t)return;
+ $('edit-tx-id').value=t.id; $('edit-tx-type').value=t.type; $('edit-tx-amount').value=Number(t.amount);
+ $('edit-tx-title').value=t.title||''; $('edit-tx-category').value=t.category||'Sonstiges'; $('edit-tx-date').value=t.date||today();
+ $('edit-modal').classList.remove('hidden'); $('edit-tx-title').focus();
+}
+function closeEditTransaction(){ $('edit-modal').classList.add('hidden'); }
 function renderTx(){
  const arr=inMonth(txMonth()).sort((a,b)=>(b.date||'').localeCompare(a.date||''));
  if(!arr.length)return empty($('transaction-list'),'Für diesen Monat gibt es noch keine Buchungen.');
- $('transaction-list').innerHTML=arr.map(t=>`<div class="item"><div class="item-main"><div class="item-title">${esc(t.title)}</div><div class="item-sub">${esc(t.category)} · ${esc(t.date)}</div></div><div style="text-align:right"><strong class="${t.type==='income'?'green':'red'}">${t.type==='income'?'+':'−'}${money(t.amount)}</strong><br><button class="btn danger small" data-delete-tx="${esc(t.id)}">Löschen</button></div></div>`).join('');
- document.querySelectorAll('[data-delete-tx]').forEach(b=>b.onclick=()=>{if(confirm('Diese Buchung löschen?')){data.transactions=data.transactions.filter(t=>t.id!==b.dataset.deleteTx);save();}});
+ $('transaction-list').innerHTML=arr.map(t=>`<div class="item"><div class="item-main"><div class="item-title">${esc(t.title)}</div><div class="item-sub">${esc(t.category)} · ${esc(t.date)}</div><div class="item-actions"><button class="btn edit small" data-edit-tx="${esc(t.id)}">Bearbeiten</button><button class="btn danger small" data-delete-tx="${esc(t.id)}">Löschen</button></div></div><strong class="${t.type==='income'?'green':'red'}">${t.type==='income'?'+':'−'}${money(t.amount)}</strong></div>`).join('');
+ document.querySelectorAll('[data-edit-tx]').forEach(b=>b.onclick=()=>openEditTransaction(b.dataset.editTx));
+ document.querySelectorAll('[data-delete-tx]').forEach(b=>b.onclick=()=>{if(confirm('Nur diese Buchung löschen? Andere Daten bleiben erhalten.')){data.transactions=data.transactions.filter(t=>t.id!==b.dataset.deleteTx);save();}});
 }
 function renderSavings(){
  if(!data.savings.length)return empty($('saving-list'),'Noch keine Sparziele. Lege oben dein erstes Ziel an.');
@@ -54,6 +62,8 @@ $('month-filter').value=monthNow();$('tx-month-filter').value=monthNow();$('tx-d
 $('month-filter').onchange=render;$('tx-month-filter').onchange=renderTx;
 $('budget-form').onsubmit=e=>{e.preventDefault();let n=Number($('monthly-budget').value);if(n<0)return alert('Bitte einen gültigen Betrag eingeben.');data.budgets[month()]=n;save();alert('Monatsbudget gespeichert.');};
 $('transaction-form').onsubmit=e=>{e.preventDefault();let n=Number($('tx-amount').value);if(!(n>0))return alert('Bitte einen Betrag größer als 0 eingeben.');data.transactions.push({id:id(),type:$('tx-type').value,amount:n,title:$('tx-title').value.trim(),category:$('tx-category').value,date:$('tx-date').value||today()});e.target.reset();$('tx-date').value=today();save();alert('Buchung gespeichert.');};
+$('edit-transaction-form').onsubmit=e=>{e.preventDefault();const n=Number($('edit-tx-amount').value);if(!(n>0))return alert('Bitte einen Betrag größer als 0 eingeben.');const t=data.transactions.find(x=>x.id===$('edit-tx-id').value);if(!t)return alert('Buchung nicht gefunden.');t.type=$('edit-tx-type').value;t.amount=n;t.title=$('edit-tx-title').value.trim();t.category=$('edit-tx-category').value;t.date=$('edit-tx-date').value||today();closeEditTransaction();$('tx-month-filter').value=t.date.slice(0,7);save();alert('Buchung aktualisiert.');};
+$('cancel-edit').onclick=closeEditTransaction;$('cancel-edit-bottom').onclick=closeEditTransaction;$('edit-modal').addEventListener('click',e=>{if(e.target===$('edit-modal'))closeEditTransaction();});document.addEventListener('keydown',e=>{if(e.key==='Escape')closeEditTransaction();});
 $('saving-form').onsubmit=e=>{e.preventDefault();let target=Number($('saving-target').value),current=Number($('saving-current').value);if(!(target>0)||current<0)return alert('Bitte gültige Beträge eingeben.');data.savings.push({id:id(),name:$('saving-name').value.trim(),target,current,date:$('saving-date').value});e.target.reset();$('saving-current').value='0';save();alert('Sparziel hinzugefügt.');};
 $('debt-form').onsubmit=e=>{e.preventDefault();let original=Number($('debt-original').value),remaining=Number($('debt-remaining').value);if(!(original>0)||remaining<0)return alert('Bitte gültige Beträge eingeben.');data.debts.push({id:id(),name:$('debt-name').value.trim(),original,remaining,due:$('debt-due').value,payment:Number($('debt-payment').value)||0});e.target.reset();save();alert('Schuld gespeichert.');};
 $('save-settings').onclick=()=>{data.settings.defaultBudget=Number($('default-budget').value)||0;save();alert('Einstellungen gespeichert.');};
