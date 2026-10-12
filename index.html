@@ -1,14 +1,138 @@
 <!doctype html>
-<html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#07100d"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><link rel="manifest" href="manifest.json"><link rel="apple-touch-icon" href="icon-192.png"><title>Mein Budget</title>
-<style>
-:root{--bg:#07100d;--panel:#101b17;--panel2:#15231d;--line:#26382e;--text:#f1f7f3;--muted:#9eb1a5;--green:#71f5a5;--red:#ff727c;--yellow:#f8d875}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#13271c 0,#07100d 45%);color:var(--text);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;padding-bottom:94px}header{padding:22px 18px 16px;position:sticky;top:0;background:#07100df0;backdrop-filter:blur(16px);z-index:5;border-bottom:1px solid #203128}header .eyebrow{color:var(--green);font-size:11px;font-weight:800;letter-spacing:2px}h1{font-size:25px;margin:3px 0 0}main{max-width:760px;margin:auto;padding:16px;}.page.hidden,.hidden{display:none!important}.muted,.tiny{color:var(--muted)}.tiny{font-size:12px}.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card,.panel,.stat{background:linear-gradient(145deg,var(--panel2),var(--panel));border:1px solid var(--line);border-radius:18px;padding:15px;margin-bottom:12px;min-width:0}.stat label{font-size:12px;color:var(--muted);display:block}.amount{font-size:22px;font-weight:800;display:block;margin-top:6px;overflow-wrap:anywhere}.green{color:var(--green)}.red{color:var(--red)}h2{font-size:19px;margin:4px 0 12px}h3{font-size:16px;margin:0 0 7px}.row{display:flex;align-items:center;justify-content:space-between;gap:10px}.row>*{min-width:0}.progress{height:8px;background:#26382e;border-radius:20px;overflow:hidden;margin:10px 0}.progress span{display:block;height:100%;width:0;background:var(--green);border-radius:20px}.formrow{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.field{margin-bottom:12px}.field label{display:block;font-size:12px;color:var(--muted);margin:0 0 5px}input,select{width:100%;background:#09120e;color:var(--text);border:1px solid #34493c;border-radius:11px;padding:12px;font:inherit;min-width:0}input:focus,select:focus{outline:2px solid #71f5a566;border-color:var(--green)}button{font:inherit;cursor:pointer}.btn{border:0;background:var(--green);color:#082012;font-weight:800;border-radius:12px;padding:12px 15px}.btn.secondary{background:#24372c;color:var(--text);border:1px solid #3b5344}.btn.danger{background:#3b2024;color:#ffb5ba;border:1px solid #633139}.btn.small{font-size:12px;padding:7px 10px;border-radius:9px}.full{width:100%}.item{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:13px 0;border-bottom:1px solid var(--line)}.item:last-child{border-bottom:0}.item-main{min-width:0;flex:1}.item-title{font-weight:750;overflow-wrap:anywhere}.item-sub{font-size:12px;color:var(--muted);margin-top:3px}.item-actions{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}.empty{color:var(--muted);font-size:14px;padding:15px 0}.nav{position:fixed;bottom:0;left:0;right:0;z-index:10;display:flex;justify-content:space-around;gap:2px;padding:8px 5px calc(8px + env(safe-area-inset-bottom));background:#09120ef5;border-top:1px solid var(--line);backdrop-filter:blur(18px)}.nav button{border:0;background:transparent;color:var(--muted);font-size:10px;flex:1;padding:7px 1px;border-radius:10px}.nav button span{display:block;font-size:20px;margin-bottom:2px}.nav button.active{color:var(--green);background:#183022}.badge{font-size:11px;padding:4px 8px;border-radius:99px;background:#24372c;color:var(--green)}.checkline{display:flex;align-items:center;gap:8px}.checkline input{width:20px;height:20px;accent-color:var(--green)}.note{font-size:12px;color:var(--muted);margin-top:8px}#edit-modal{position:fixed;inset:0;background:#000b;z-index:20;display:flex;align-items:flex-end;justify-content:center;padding:12px}#edit-modal .modal-card{width:100%;max-width:600px;max-height:90vh;overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:18px}@media(min-width:600px){#edit-modal{align-items:center}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
-</style></head><body>
-<header><div class="eyebrow">DEIN GELD. DEIN ÜBERBLICK.</div><h1 id="page-title">Übersicht</h1></header><main>
-<section class="page" id="page-overview"><div class="card"><div class="tiny">GESAMTSALDO ALLER ERFASSTEN BUCHUNGEN</div><div class="amount green" id="balance">0,00 €</div><div class="note">Wähle den Monat, um deine Planung anzusehen.</div><div class="field" style="margin:14px 0 0"><label>Monat</label><input type="month" id="month-filter"></div></div><div class="grid"><div class="stat"><label>Einnahmen im Monat</label><strong class="amount green" id="income-total">0,00 €</strong></div><div class="stat"><label>Ausgaben gebucht</label><strong class="amount red" id="expense-total">0,00 €</strong></div><div class="stat"><label>Monatsbudget</label><strong class="amount" id="budget-total-label">0,00 €</strong></div><div class="stat"><label>Budget übrig (nach Buchungen)</label><strong class="amount green" id="remaining">0,00 €</strong></div></div><div class="card"><div class="row"><h3>Budgetfortschritt</h3><span class="badge" id="budget-percent">Kein Budget</span></div><div class="progress"><span id="budget-progress"></span></div><div class="row tiny"><span id="budget-used">0,00 € ausgegeben</span><span id="budget-caption">Noch kein Monatsbudget festgelegt</span></div></div><div class="card"><div class="row"><h2>Fixkosten eingeplant</h2><strong id="fixed-total" class="amount" style="font-size:18px">0,00 €</strong></div><div class="row"><span class="muted tiny">Nach Fixkosten verfügbar (Planwert)</span><strong id="after-fixed">0,00 €</strong></div><div class="note">Planwert: Monatsbudget minus aktive Fixkosten. Bereits gebuchte Ausgaben werden separat angezeigt.</div><button class="btn secondary full" data-go="fixed" style="margin-top:12px">Fixkosten verwalten</button></div><div class="card"><h2>Letzte Buchungen</h2><div id="recent-list"></div></div><button class="btn full" data-go="budget" data-add="expense">＋ Buchung erfassen</button></section>
-<section class="page hidden" id="page-fixed"><div class="card"><h2>Fixkosten verwalten</h2><p class="muted tiny">Regelmäßige Ausgaben einmal eintragen. Sie werden jeden Monat eingeplant, aber nicht automatisch als bezahlt gebucht.</p><form id="fixed-form"><div class="field"><label>Bezeichnung</label><input id="fixed-name" required placeholder="z. B. Miete"></div><div class="formrow"><div class="field"><label>Betrag pro Monat (€)</label><input id="fixed-amount" type="number" min="0.01" step="0.01" required placeholder="850"></div><div class="field"><label>Fälligkeitstag</label><input id="fixed-day" type="number" min="1" max="31" value="1" required></div></div><div class="field"><label>Kategorie</label><select id="fixed-category"><option>Miete & Nebenkosten</option><option>Strom & Internet</option><option>Handy</option><option>Versicherung</option><option>Auto</option><option>Kreditrate</option><option>Abos & Mitgliedschaften</option><option>Sonstiges</option></select></div><button class="btn full">＋ Fixkosten speichern</button></form></div><div class="card"><div class="row"><h2>Deine Fixkosten</h2><strong id="fixed-list-total">0,00 €</strong></div><div id="fixed-list"></div></div><div class="card"><h2>Monatsübersicht</h2><div class="field"><label>Monat ansehen</label><input type="month" id="fixed-month-filter"></div><div id="fixed-month-list"></div></div></section>
-<section class="page hidden" id="page-saving"><div class="card"><h2>Neues Sparziel</h2><form id="saving-form"><div class="field"><label>Name des Sparziels</label><input id="saving-name" required placeholder="z. B. Urlaub"></div><div class="formrow"><div class="field"><label>Zielbetrag (€)</label><input id="saving-target" type="number" min="0.01" step=".01" required></div><div class="field"><label>Bereits gespart (€)</label><input id="saving-current" type="number" min="0" step=".01" value="0"></div></div><div class="field"><label>Zieldatum (optional)</label><input id="saving-date" type="date"></div><button class="btn full">Sparziel hinzufügen</button></form></div><div id="saving-list"></div></section>
-<section class="page hidden" id="page-budget"><div class="card"><h2>Monatsbudget</h2><form id="budget-form"><div class="field"><label>Monat</label><input type="month" id="budget-month-input"></div><div class="field"><label>Budget für diesen Monat (€)</label><input id="monthly-budget" type="number" min="0" step=".01" required placeholder="2000"></div><button class="btn full">Monatsbudget speichern</button></form></div><div class="card"><h2>Neue Buchung</h2><form id="transaction-form"><div class="formrow"><div class="field"><label>Art</label><select id="tx-type"><option value="expense">Ausgabe</option><option value="income">Einnahme</option></select></div><div class="field"><label>Betrag (€)</label><input id="tx-amount" type="number" min="0.01" step=".01" required placeholder="25,00"></div></div><div class="field"><label>Bezeichnung</label><input id="tx-title" required placeholder="z. B. Wocheneinkauf"></div><div class="formrow"><div class="field"><label>Kategorie</label><select id="tx-category"><option>Lebensmittel</option><option>Wohnen</option><option>Auto</option><option>Freizeit</option><option>Gesundheit</option><option>Fixkosten</option><option>Gehalt</option><option>Sonstiges</option></select></div><div class="field"><label>Datum</label><input id="tx-date" type="date" required></div></div><button class="btn full">Buchung speichern</button></form></div><div class="card"><h2>Buchungen</h2><div class="field"><label>Monat filtern</label><input type="month" id="tx-month-filter"></div><div id="transaction-list"></div></div></section>
-<section class="page hidden" id="page-debts"><div class="card"><h2>Schuld hinzufügen</h2><form id="debt-form"><div class="field"><label>Gläubiger / Bezeichnung</label><input id="debt-name" required placeholder="z. B. Autokredit"></div><div class="formrow"><div class="field"><label>Ursprünglicher Betrag (€)</label><input id="debt-original" type="number" min="0.01" step=".01" required></div><div class="field"><label>Noch offen (€)</label><input id="debt-remaining" type="number" min="0" step=".01" required></div></div><div class="formrow"><div class="field"><label>Monatliche Rate (€)</label><input id="debt-payment" type="number" min="0" step=".01" value="0"></div><div class="field"><label>Fälligkeitsdatum (optional)</label><input id="debt-due" type="date"></div></div><button class="btn full">Schuld speichern</button></form></div><div class="card"><div class="row"><h2>Offene Schulden</h2><strong class="red" id="debt-total">0,00 €</strong></div><div id="debt-list"></div></div></section>
-<section class="page hidden" id="page-more"><div class="card"><h2>Standardeinstellungen</h2><div class="field"><label>Standard-Monatsbudget (€)</label><input id="default-budget" type="number" min="0" step=".01" placeholder="0"></div><button class="btn full" id="save-settings">Einstellungen speichern</button></div><div class="card"><h2>Backup & Daten</h2><p class="muted tiny">Exportiere regelmäßig deine Daten. Das Backup enthält auch deine Fixkosten.</p><button class="btn full" id="export-btn">Backup exportieren</button><button class="btn secondary full" id="import-btn" style="margin-top:8px">Backup importieren</button><input type="file" id="import-file" accept="application/json,.json" class="hidden"><button class="btn danger full" id="clear-data" style="margin-top:16px">Alle lokalen Daten löschen</button></div><div class="card"><h2>Datenschutz</h2><p class="muted tiny">Deine Finanzdaten werden lokal in diesem Browser gespeichert. Die App verbindet sich nicht mit einem Bankkonto. Beim Löschen der Browserdaten können Einträge verloren gehen.</p></div></section>
-</main><nav class="nav"><button class="active" data-page="overview"><span>⌂</span>Übersicht</button><button data-page="fixed"><span>↻</span>Fixkosten</button><button data-page="saving"><span>♧</span>Sparen</button><button data-page="budget"><span>€</span>Budget</button><button data-page="debts"><span>↘</span>Schulden</button><button data-page="more"><span>•••</span>Mehr</button></nav>
-<div id="edit-modal" class="hidden"><div class="modal-card"><h2>Buchung bearbeiten</h2><form id="edit-transaction-form"><input id="edit-tx-id" type="hidden"><div class="formrow"><div class="field"><label>Art</label><select id="edit-tx-type"><option value="expense">Ausgabe</option><option value="income">Einnahme</option></select></div><div class="field"><label>Betrag (€)</label><input id="edit-tx-amount" type="number" min=".01" step=".01" required></div></div><div class="field"><label>Bezeichnung</label><input id="edit-tx-title" required></div><div class="formrow"><div class="field"><label>Kategorie</label><input id="edit-tx-category" required></div><div class="field"><label>Datum</label><input id="edit-tx-date" type="date" required></div></div><button class="btn full">Änderungen speichern</button><button class="btn secondary full" type="button" id="cancel-edit" style="margin-top:8px">Abbrechen</button><button class="btn secondary full" type="button" id="cancel-edit-bottom" style="display:none">Abbrechen</button></form></div></div><script src="app.js"></script></body></html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#080b0a">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Money Master">
+  <meta name="description" content="Offline Budget- und Finanzmanager">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="assets/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>Money Master Pro</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand">
+        <div class="brand-mark"><span>₿</span></div>
+        <div><div class="eyebrow">DEIN FINANZCOCKPIT</div><h1>Money<span>Master</span></h1></div>
+      </div>
+      <button class="icon-btn" id="exportBtn" aria-label="Daten exportieren" title="Daten exportieren">↗</button>
+    </header>
+
+    <main>
+      <section class="page active" id="page-overview">
+        <div class="welcome-row">
+          <div><p class="eyebrow">ÜBERSICHT</p><h2>Dein Geld.<br><em>Deine Kontrolle.</em></h2></div>
+          <div class="month-pill"><span class="pulse"></span><span id="monthLabel"></span></div>
+        </div>
+        <article class="hero-card">
+          <div class="hero-orb orb-one"></div><div class="hero-orb orb-two"></div>
+          <div class="card-top"><span>GESAMTSALDO</span><button class="tiny-icon" id="toggleBalance" aria-label="Saldo verbergen">◉</button></div>
+          <div class="balance" id="balanceValue">0,00&nbsp;€</div>
+          <div class="balance-sub"><span class="trend-up">↗</span> Dein aktueller Kontostand</div>
+          <div class="hero-bottom">
+            <div><span class="mini-label">EINNAHMEN</span><strong id="incomeValue">0,00 €</strong></div>
+            <div><span class="mini-label">AUSGABEN</span><strong id="expenseValue">0,00 €</strong></div>
+            <div class="hero-spark" aria-hidden="true"><svg viewBox="0 0 120 42"><path d="M2 32 C14 30 15 19 26 23 S40 31 48 18 S66 28 75 15 S95 21 118 3" fill="none" stroke="#b8ff55" stroke-width="3" stroke-linecap="round"/><path d="M2 32 C14 30 15 19 26 23 S40 31 48 18 S66 28 75 15 S95 21 118 3 L118 42 L2 42Z" fill="url(#fade)"/><defs><linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b8ff55" stop-opacity=".25"/><stop offset="1" stop-color="#b8ff55" stop-opacity="0"/></linearGradient></defs></svg></div>
+          </div>
+        </article>
+
+        <div class="quick-grid">
+          <button class="quick-action" id="quickExpense"><span class="quick-icon expense">−</span><span>Ausgabe</span></button>
+          <button class="quick-action" id="quickIncome"><span class="quick-icon income">＋</span><span>Einnahme</span></button>
+          <button class="quick-action" id="quickSaving"><span class="quick-icon saving">◇</span><span>Sparziel</span></button>
+          <button class="quick-action" id="quickBudget"><span class="quick-icon budget">▤</span><span>Budget</span></button>
+        </div>
+
+        <div class="section-heading"><div><p class="eyebrow">ANALYSE</p><h3>Dein Cashflow</h3></div><span class="period-label">Dieser Monat</span></div>
+        <article class="panel cashflow-panel">
+          <div class="cashflow-stats">
+            <div><span class="legend-dot green"></span><span>Einnahmen</span><strong id="chartIncome">0 €</strong></div>
+            <div><span class="legend-dot coral"></span><span>Ausgaben</span><strong id="chartExpense">0 €</strong></div>
+          </div>
+          <div class="chart-wrap"><canvas id="cashflowChart" height="150" aria-label="Cashflow Diagramm"></canvas></div>
+          <div class="chart-foot"><span>Monatlicher Überblick</span><span id="savingsRate">Sparquote: 0 %</span></div>
+        </article>
+
+        <div class="section-heading"><div><p class="eyebrow">IM BLICK</p><h3>Letzte Buchungen</h3></div><button class="text-btn" data-go="budget">Alle ansehen ↗</button></div>
+        <div class="transaction-list" id="recentTransactions"></div>
+      </section>
+
+      <section class="page" id="page-saving">
+        <div class="page-title"><p class="eyebrow">DEINE ZUKUNFT</p><h2>Sparziele<span class="lime">.</span></h2><p class="muted">Kleine Schritte. Große Ziele.</p></div>
+        <div class="saving-summary panel"><div><span class="mini-label">GESAMT GESPART</span><strong id="totalSaved">0,00 €</strong></div><div class="saving-ring" id="savingRing"><span id="savingPercent">0%</span></div></div>
+        <div id="goalsList" class="goal-list"></div>
+        <button class="primary-btn full" id="addGoalBtn">＋ Neues Sparziel</button>
+        <div class="tip-card"><span class="tip-icon">✦</span><div><strong>Money-Tipp</strong><p>Lege zuerst einen kleinen Notgroschen an. Ein klares Ziel macht Sparen greifbarer.</p></div></div>
+      </section>
+
+      <section class="page" id="page-budget">
+        <div class="page-title"><p class="eyebrow">VOLLE TRANSPARENZ</p><h2>Budget &<br><span class="lime">Buchungen.</span></h2><p class="muted">Jede Buchung bleibt in deiner Hand.</p></div>
+        <div class="month-switch"><button id="prevMonth" aria-label="Vorheriger Monat">‹</button><strong id="budgetMonth"></strong><button id="nextMonth" aria-label="Nächster Monat">›</button></div>
+        <div class="budget-overview panel"><div class="budget-overview-top"><span>Monatsbudget</span><strong id="budgetSpent">0 € / 0 €</strong></div><div class="progress-track"><div id="budgetProgress" class="progress-fill"></div></div><div class="budget-overview-bottom"><span id="budgetRemaining">0 € übrig</span><button class="text-btn" id="editBudgetBtn">Budget ändern</button></div></div>
+        <div class="filter-row"><button class="filter-chip selected" data-filter="all">Alle</button><button class="filter-chip" data-filter="expense">Ausgaben</button><button class="filter-chip" data-filter="income">Einnahmen</button></div>
+        <div id="allTransactions" class="transaction-list"></div>
+        <button class="primary-btn full" id="addTransactionBtn">＋ Buchung hinzufügen</button>
+        <div class="danger-zone"><button id="resetBtn" class="danger-btn">Alle App-Daten zurücksetzen</button></div>
+      </section>
+
+      <section class="page" id="page-debts">
+        <div class="page-title"><p class="eyebrow">SCHRITT FÜR SCHRITT</p><h2>Schulden<span class="lime">frei.</span></h2><p class="muted">Behalte offene Beträge im Blick.</p></div>
+        <div class="debt-total panel"><span class="mini-label">OFFENE SCHULDEN</span><strong id="debtTotal">0,00 €</strong><p id="debtCount">Noch keine Schulden eingetragen</p></div>
+        <div id="debtsList" class="goal-list"></div>
+        <button class="primary-btn full" id="addDebtBtn">＋ Schuld hinzufügen</button>
+        <div class="tip-card"><span class="tip-icon">↗</span><div><strong>Ein Plan hilft</strong><p>Trage den offenen Betrag und deine Rückzahlungen ein, um deinen Fortschritt zu sehen.</p></div></div>
+      </section>
+
+      <section class="page" id="page-more">
+        <div class="page-title"><p class="eyebrow">DEIN BEREICH</p><h2>Mehr<span class="lime">.</span></h2><p class="muted">Einstellungen und deine Daten.</p></div>
+        <div class="profile-card panel"><div class="avatar">MM</div><div><strong>Money Master Pro</strong><p>Deine Finanzen. Privat und lokal.</p></div><span class="offline-tag">● OFFLINE</span></div>
+        <div class="settings-group">
+          <button class="setting-row" id="exportData"><span class="setting-icon">↗</span><span><strong>Daten exportieren</strong><small>Backup als JSON-Datei</small></span><b>›</b></button>
+          <button class="setting-row" id="importData"><span class="setting-icon">↙</span><span><strong>Backup importieren</strong><small>Vorhandene Sicherung wiederherstellen</small></span><b>›</b></button>
+          <button class="setting-row" id="manageBudget"><span class="setting-icon">▤</span><span><strong>Monatsbudget</strong><small id="budgetSettingLabel">Budget festlegen</small></span><b>›</b></button>
+          <button class="setting-row" id="manageCategories"><span class="setting-icon">◈</span><span><strong>Kategorien</strong><small>Vordefinierte Buchungskategorien</small></span><b>›</b></button>
+          <button class="setting-row" id="privacyInfo"><span class="setting-icon">♢</span><span><strong>Datenschutz</strong><small>So werden deine Daten gespeichert</small></span><b>›</b></button>
+        </div>
+        <div class="app-version"><div class="brand-mark small"><span>₿</span></div><strong>MoneyMaster</strong><span>PRO · VERSION 1.0.0</span></div>
+      </section>
+    </main>
+
+    <nav class="bottom-nav" aria-label="Hauptnavigation">
+      <button class="nav-item active" data-page="overview"><span class="nav-icon">⌂</span><small>Übersicht</small></button>
+      <button class="nav-item" data-page="saving"><span class="nav-icon">◇</span><small>Sparen</small></button>
+      <button class="nav-item" data-page="budget"><span class="nav-icon">▤</span><small>Budget</small></button>
+      <button class="nav-item" data-page="debts"><span class="nav-icon">⇄</span><small>Schulden</small></button>
+      <button class="nav-item" data-page="more"><span class="nav-icon">•••</span><small>Mehr</small></button>
+    </nav>
+  </div>
+
+  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <div class="modal-handle"></div><div class="modal-header"><div><p class="eyebrow" id="modalEyebrow">MONEY MASTER</p><h3 id="modalTitle">Neue Buchung</h3></div><button class="icon-btn close-modal" id="closeModal" aria-label="Schließen">×</button></div>
+      <form id="entryForm">
+        <input type="hidden" id="entryId">
+        <div class="type-toggle" id="transactionTypeToggle"><button type="button" class="selected" data-type="expense">− Ausgabe</button><button type="button" data-type="income">＋ Einnahme</button></div>
+        <label class="field-label" for="entryTitle">Bezeichnung</label><input id="entryTitle" class="field" maxlength="70" placeholder="z. B. Supermarkt, Gehalt" required>
+        <div class="form-grid"><div><label class="field-label" for="entryAmount">Betrag (€)</label><input id="entryAmount" class="field" type="number" inputmode="decimal" min="0.01" step="0.01" placeholder="0,00" required></div><div><label class="field-label" for="entryDate">Datum</label><input id="entryDate" class="field" type="date" required></div></div>
+        <label class="field-label" for="entryCategory">Kategorie</label><select id="entryCategory" class="field"></select>
+        <label class="field-label" for="entryNote">Notiz (optional)</label><input id="entryNote" class="field" maxlength="160" placeholder="Zusätzliche Details">
+        <div class="modal-actions"><button type="button" class="secondary-btn" id="cancelEntry">Abbrechen</button><button type="submit" class="primary-btn">Speichern</button></div>
+        <button type="button" class="delete-entry-btn hidden" id="deleteEntryBtn">Buchung löschen</button>
+      </form>
+    </section>
+  </div>
+
+  <div class="modal-backdrop" id="simpleModalBackdrop" aria-hidden="true">
+    <section class="modal" role="dialog" aria-modal="true"><div class="modal-handle"></div><div class="modal-header"><div><p class="eyebrow">MONEY MASTER</p><h3 id="simpleModalTitle">Details</h3></div><button class="icon-btn" id="closeSimpleModal" aria-label="Schließen">×</button></div><div id="simpleModalBody"></div></section>
+  </div>
+  <input type="file" id="importFile" accept="application/json,.json" hidden>
+  <div class="toast" id="toast" role="status"></div>
+  <script src="app.js"></script>
+  <script>if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) { window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(() => {})); }</script>
+</body>
+</html>
