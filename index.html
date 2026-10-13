@@ -74,13 +74,19 @@
         <div class="page-title"><p class="eyebrow">VOLLE TRANSPARENZ</p><h2>Budget &<br><span class="lime">Buchungen.</span></h2><p class="muted">Jede Buchung bleibt in deiner Hand.</p></div>
         <div class="month-switch"><button id="prevMonth" aria-label="Vorheriger Monat">‹</button><strong id="budgetMonth"></strong><button id="nextMonth" aria-label="Nächster Monat">›</button></div>
         <div class="budget-overview panel"><div class="budget-overview-top"><span>Monatsbudget</span><strong id="budgetSpent">0 € / 0 €</strong></div><div class="progress-track"><div id="budgetProgress" class="progress-fill"></div></div><div class="budget-overview-bottom"><span id="budgetRemaining">0 € übrig</span><button class="text-btn" id="editBudgetBtn">Budget ändern</button></div></div>
-        <div class="section-heading fixed-cost-heading"><div><p class="eyebrow">AUTOMATISCH IM BLICK</p><h3>Fixkosten</h3></div><button class="text-btn" id="addFixedCostBtn">＋ Hinzufügen</button></div>
-        <div class="fixed-cost-summary panel"><div><span class="mini-label">MONATLICH UMGERECHNET</span><strong id="fixedMonthlyTotal">0,00 €</strong></div><div><span class="mini-label">AKTIVE FIXKOSTEN</span><strong id="fixedCostCount">0</strong></div></div>
-        <div id="fixedCostsList" class="fixed-cost-list"></div>
         <div class="filter-row"><button class="filter-chip selected" data-filter="all">Alle</button><button class="filter-chip" data-filter="expense">Ausgaben</button><button class="filter-chip" data-filter="income">Einnahmen</button></div>
         <div id="allTransactions" class="transaction-list"></div>
         <button class="primary-btn full" id="addTransactionBtn">＋ Buchung hinzufügen</button>
         <div class="danger-zone"><button id="resetBtn" class="danger-btn">Alle App-Daten zurücksetzen</button></div>
+      </section>
+
+
+      <section class="page" id="page-fixedcosts">
+        <div class="page-title"><p class="eyebrow">REGELMÄSSIGE AUSGABEN</p><h2>Fixkosten<span class="lime">.</span></h2><p class="muted">Monatlich, vierteljährlich, halbjährlich oder jährlich – alles an einem Ort.</p></div>
+        <div class="fixed-cost-summary panel"><div><span class="mini-label">MONATLICH UMGERECHNET</span><strong id="fixedMonthlyTotal">0,00 €</strong></div><div><span class="mini-label">AKTIVE FIXKOSTEN</span><strong id="fixedCostCount">0</strong></div></div>
+        <div class="section-heading fixed-cost-heading"><div><p class="eyebrow">AUTOMATISCH IM BLICK</p><h3>Deine Fixkosten</h3></div><button class="text-btn" id="addFixedCostBtn">＋ Hinzufügen</button></div>
+        <div id="fixedCostsList" class="fixed-cost-list"></div>
+        <div class="tip-card"><span class="tip-icon">✦</span><div><strong>Gut zu wissen</strong><p>Die App berücksichtigt Fälligkeiten automatisch. Vierteljährliche, halbjährliche und jährliche Kosten werden für die Übersicht zusätzlich auf einen Monatswert umgerechnet.</p></div></div>
       </section>
 
       <section class="page" id="page-more">
@@ -101,6 +107,7 @@
       <button class="nav-item active" data-page="overview"><span class="nav-icon">⌂</span><small>Übersicht</small></button>
       <button class="nav-item" data-page="saving"><span class="nav-icon">◇</span><small>Sparen</small></button>
       <button class="nav-item" data-page="budget"><span class="nav-icon">▤</span><small>Budget</small></button>
+      <button class="nav-item" data-page="fixedcosts"><span class="nav-icon">↻</span><small>Fixkosten</small></button>
       <button class="nav-item" data-page="more"><span class="nav-icon">•••</span><small>Mehr</small></button>
     </nav>
   </div>
