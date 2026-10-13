@@ -3,7 +3,7 @@
 ## Enthalten
 - `index.html` — App-Struktur
 - `styles.css` — Premium-Dark-Design mit Neon-Grün, Animationen und responsivem Layout
-- `app.js` — Buchungen, Budgets, Sparziele, Schulden, Diagramm, Import/Export
+- `app.js` — Buchungen, Budgets, Sparziele, Diagramm, Import/Export
 - `manifest.webmanifest` — PWA-Metadaten
 - `sw.js` — Offline-Caching für die Web-App
 - `assets/icon-192.png`, `assets/icon-512.png` — App-Icons
@@ -13,7 +13,6 @@
 - Buchungen hinzufügen, bearbeiten und einzeln löschen
 - Monatsbudget mit Fortschrittsanzeige
 - Sparziele mit Einzahlung, Bearbeitung und Löschen
-- Schulden mit Rückzahlungen, Bearbeitung und Löschen
 - JSON-Backup exportieren und importieren
 - Daten lokal im Browser speichern; kein Konto nötig
 - Responsive Layout mit iPhone-Safe-Area und Navigation unten
