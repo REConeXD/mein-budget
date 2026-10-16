@@ -1,139 +1,30 @@
 <!doctype html>
 <html lang="de">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-  <meta name="theme-color" content="#080b0a">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Money Master">
-  <meta name="description" content="Offline Budget- und Finanzmanager">
-  <link rel="manifest" href="manifest.webmanifest">
-  <link rel="apple-touch-icon" href="assets/icon-192.png">
-  <link rel="stylesheet" href="styles.css">
-  <title>Money Master Pro</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#07111c"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>Mein Budget</title><link rel="manifest" href="manifest.json"><link rel="icon" href="assets/logos/logo-1-coin-growth.png">
+<link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="app-shell">
-    <header class="topbar">
-      <div class="brand">
-        <div class="brand-mark"><span>₿</span></div>
-        <div><div class="eyebrow">DEIN FINANZCOCKPIT</div><h1>Money<span>Master</span></h1></div>
-      </div>
-      <button class="icon-btn" id="exportBtn" aria-label="Daten exportieren" title="Daten exportieren">↗</button>
-    </header>
-
-    <main>
-      <section class="page active" id="page-overview">
-        <div class="welcome-row">
-          <div><p class="eyebrow">ÜBERSICHT</p><h2>Dein Geld.<br><em>Deine Kontrolle.</em></h2></div>
-          <div class="month-pill"><span class="pulse"></span><span id="monthLabel"></span></div>
-        </div>
-        <article class="hero-card">
-          <div class="hero-orb orb-one"></div><div class="hero-orb orb-two"></div>
-          <div class="card-top"><span>GESAMTSALDO</span><button class="tiny-icon" id="toggleBalance" aria-label="Saldo verbergen">◉</button></div>
-          <div class="balance" id="balanceValue">0,00&nbsp;€</div>
-          <div class="balance-sub"><span class="trend-up">↗</span> Dein aktueller Kontostand</div>
-          <div class="hero-bottom">
-            <div><span class="mini-label">EINNAHMEN</span><strong id="incomeValue">0,00 €</strong></div>
-            <div><span class="mini-label">AUSGABEN</span><strong id="expenseValue">0,00 €</strong></div>
-            <div class="hero-spark" aria-hidden="true"><svg viewBox="0 0 120 42"><path d="M2 32 C14 30 15 19 26 23 S40 31 48 18 S66 28 75 15 S95 21 118 3" fill="none" stroke="#b8ff55" stroke-width="3" stroke-linecap="round"/><path d="M2 32 C14 30 15 19 26 23 S40 31 48 18 S66 28 75 15 S95 21 118 3 L118 42 L2 42Z" fill="url(#fade)"/><defs><linearGradient id="fade" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#b8ff55" stop-opacity=".25"/><stop offset="1" stop-color="#b8ff55" stop-opacity="0"/></linearGradient></defs></svg></div>
-          </div>
-        </article>
-
-        <div class="quick-grid">
-          <button class="quick-action" id="quickExpense"><span class="quick-icon expense">−</span><span>Ausgabe</span></button>
-          <button class="quick-action" id="quickIncome"><span class="quick-icon income">＋</span><span>Einnahme</span></button>
-          <button class="quick-action" id="quickSaving"><span class="quick-icon saving">◇</span><span>Sparziel</span></button>
-          <button class="quick-action" id="quickBudget"><span class="quick-icon budget">▤</span><span>Budget</span></button>
-        </div>
-
-        <div class="section-heading"><div><p class="eyebrow">ANALYSE</p><h3>Dein Cashflow</h3></div><span class="period-label">Dieser Monat</span></div>
-        <article class="panel cashflow-panel">
-          <div class="cashflow-stats">
-            <div><span class="legend-dot green"></span><span>Einnahmen</span><strong id="chartIncome">0 €</strong></div>
-            <div><span class="legend-dot coral"></span><span>Ausgaben</span><strong id="chartExpense">0 €</strong></div>
-          </div>
-          <div class="chart-wrap"><canvas id="cashflowChart" height="150" aria-label="Cashflow Diagramm"></canvas></div>
-          <div class="chart-foot"><span>Monatlicher Überblick</span><span id="savingsRate">Sparquote: 0 %</span></div>
-        </article>
-
-        <div class="section-heading"><div><p class="eyebrow">IM BLICK</p><h3>Letzte Buchungen</h3></div><button class="text-btn" data-go="budget">Alle ansehen ↗</button></div>
-        <div class="transaction-list" id="recentTransactions"></div>
-      </section>
-
-      <section class="page" id="page-saving">
-        <div class="page-title"><p class="eyebrow">DEINE ZUKUNFT</p><h2>Sparziele<span class="lime">.</span></h2><p class="muted">Kleine Schritte. Große Ziele.</p></div>
-        <div class="saving-summary panel"><div><span class="mini-label">GESAMT GESPART</span><strong id="totalSaved">0,00 €</strong></div><div class="saving-ring" id="savingRing"><span id="savingPercent">0%</span></div></div>
-        <div id="goalsList" class="goal-list"></div>
-        <button class="primary-btn full" id="addGoalBtn">＋ Neues Sparziel</button>
-        <div class="tip-card"><span class="tip-icon">✦</span><div><strong>Money-Tipp</strong><p>Lege zuerst einen kleinen Notgroschen an. Ein klares Ziel macht Sparen greifbarer.</p></div></div>
-      </section>
-
-      <section class="page" id="page-budget">
-        <div class="page-title"><p class="eyebrow">VOLLE TRANSPARENZ</p><h2>Budget &<br><span class="lime">Buchungen.</span></h2><p class="muted">Jede Buchung bleibt in deiner Hand.</p></div>
-        <div class="month-switch"><button id="prevMonth" aria-label="Vorheriger Monat">‹</button><strong id="budgetMonth"></strong><button id="nextMonth" aria-label="Nächster Monat">›</button></div>
-        <div class="budget-overview panel"><div class="budget-overview-top"><span>Monatsbudget</span><strong id="budgetSpent">0 € / 0 €</strong></div><div class="progress-track"><div id="budgetProgress" class="progress-fill"></div></div><div class="budget-overview-bottom"><span id="budgetRemaining">0 € übrig</span><button class="text-btn" id="editBudgetBtn">Budget ändern</button></div></div>
-        <div class="filter-row"><button class="filter-chip selected" data-filter="all">Alle</button><button class="filter-chip" data-filter="expense">Ausgaben</button><button class="filter-chip" data-filter="income">Einnahmen</button></div>
-        <div id="allTransactions" class="transaction-list"></div>
-        <button class="primary-btn full" id="addTransactionBtn">＋ Buchung hinzufügen</button>
-        <div class="danger-zone"><button id="resetBtn" class="danger-btn">Alle App-Daten zurücksetzen</button></div>
-      </section>
-
-
-      <section class="page" id="page-fixedcosts">
-        <div class="page-title"><p class="eyebrow">REGELMÄSSIGE AUSGABEN</p><h2>Fixkosten<span class="lime">.</span></h2><p class="muted">Monatlich, vierteljährlich, halbjährlich oder jährlich – alles an einem Ort.</p></div>
-        <div class="fixed-cost-summary panel"><div><span class="mini-label">MONATLICH UMGERECHNET</span><strong id="fixedMonthlyTotal">0,00 €</strong></div><div><span class="mini-label">AKTIVE FIXKOSTEN</span><strong id="fixedCostCount">0</strong></div></div>
-        <div class="section-heading fixed-cost-heading"><div><p class="eyebrow">AUTOMATISCH IM BLICK</p><h3>Deine Fixkosten</h3></div><button class="text-btn" id="addFixedCostBtn">＋ Hinzufügen</button></div>
-        <div id="fixedCostsList" class="fixed-cost-list"></div>
-        <div class="tip-card"><span class="tip-icon">✦</span><div><strong>Gut zu wissen</strong><p>Die App berücksichtigt Fälligkeiten automatisch. Vierteljährliche, halbjährliche und jährliche Kosten werden für die Übersicht zusätzlich auf einen Monatswert umgerechnet.</p></div></div>
-      </section>
-
-      <section class="page" id="page-more">
-        <div class="page-title"><p class="eyebrow">DEIN BEREICH</p><h2>Mehr<span class="lime">.</span></h2><p class="muted">Einstellungen und deine Daten.</p></div>
-        <div class="profile-card panel"><div class="avatar">MM</div><div><strong>Money Master Pro</strong><p>Deine Finanzen. Privat und lokal.</p></div><span class="offline-tag">● OFFLINE</span></div>
-        <div class="settings-group">
-          <button class="setting-row" id="exportData"><span class="setting-icon">↗</span><span><strong>Daten exportieren</strong><small>Backup als JSON-Datei</small></span><b>›</b></button>
-          <button class="setting-row" id="importData"><span class="setting-icon">↙</span><span><strong>Backup importieren</strong><small>Vorhandene Sicherung wiederherstellen</small></span><b>›</b></button>
-          <button class="setting-row" id="manageBudget"><span class="setting-icon">▤</span><span><strong>Monatsbudget</strong><small id="budgetSettingLabel">Budget festlegen</small></span><b>›</b></button>
-          <button class="setting-row" id="manageCategories"><span class="setting-icon">◈</span><span><strong>Kategorien</strong><small>Vordefinierte Buchungskategorien</small></span><b>›</b></button>
-          <button class="setting-row" id="privacyInfo"><span class="setting-icon">♢</span><span><strong>Datenschutz</strong><small>So werden deine Daten gespeichert</small></span><b>›</b></button>
-        </div>
-        <div class="app-version"><div class="brand-mark small"><span>₿</span></div><strong>MoneyMaster</strong><span>PRO · VERSION 1.0.0</span></div>
-      </section>
-    </main>
-
-    <nav class="bottom-nav" aria-label="Hauptnavigation">
-      <button class="nav-item active" data-page="overview"><span class="nav-icon">⌂</span><small>Übersicht</small></button>
-      <button class="nav-item" data-page="saving"><span class="nav-icon">◇</span><small>Sparen</small></button>
-      <button class="nav-item" data-page="budget"><span class="nav-icon">▤</span><small>Budget</small></button>
-      <button class="nav-item" data-page="fixedcosts"><span class="nav-icon">↻</span><small>Fixkosten</small></button>
-      <button class="nav-item" data-page="more"><span class="nav-icon">•••</span><small>Mehr</small></button>
-    </nav>
-  </div>
-
-  <div class="modal-backdrop" id="modalBackdrop" aria-hidden="true">
-    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
-      <div class="modal-handle"></div><div class="modal-header"><div><p class="eyebrow" id="modalEyebrow">MONEY MASTER</p><h3 id="modalTitle">Neue Buchung</h3></div><button class="icon-btn close-modal" id="closeModal" aria-label="Schließen">×</button></div>
-      <form id="entryForm">
-        <input type="hidden" id="entryId">
-        <div class="type-toggle" id="transactionTypeToggle"><button type="button" class="selected" data-type="expense">− Ausgabe</button><button type="button" data-type="income">＋ Einnahme</button></div>
-        <label class="field-label" for="entryTitle">Bezeichnung</label><input id="entryTitle" class="field" maxlength="70" placeholder="z. B. Supermarkt, Gehalt" required>
-        <div class="form-grid"><div><label class="field-label" for="entryAmount">Betrag (€)</label><input id="entryAmount" class="field" type="number" inputmode="decimal" min="0.01" step="0.01" placeholder="0,00" required></div><div><label class="field-label" for="entryDate">Datum</label><input id="entryDate" class="field" type="date" required></div></div>
-        <label class="field-label" for="entryCategory">Kategorie</label><select id="entryCategory" class="field"></select>
-        <label class="field-label" for="entryNote">Notiz (optional)</label><input id="entryNote" class="field" maxlength="160" placeholder="Zusätzliche Details">
-        <div class="modal-actions"><button type="button" class="secondary-btn" id="cancelEntry">Abbrechen</button><button type="submit" class="primary-btn">Speichern</button></div>
-        <button type="button" class="delete-entry-btn hidden" id="deleteEntryBtn">Buchung löschen</button>
-      </form>
-    </section>
-  </div>
-
-  <div class="modal-backdrop" id="simpleModalBackdrop" aria-hidden="true">
-    <section class="modal" role="dialog" aria-modal="true"><div class="modal-handle"></div><div class="modal-header"><div><p class="eyebrow">MONEY MASTER</p><h3 id="simpleModalTitle">Details</h3></div><button class="icon-btn" id="closeSimpleModal" aria-label="Schließen">×</button></div><div id="simpleModalBody"></div></section>
-  </div>
-  <input type="file" id="importFile" accept="application/json,.json" hidden>
-  <div class="toast" id="toast" role="status"></div>
-  <script src="app.js"></script>
-  <script>if ("serviceWorker" in navigator && (location.protocol === "https:" || location.hostname === "localhost")) { window.addEventListener("load", () => navigator.serviceWorker.register("./sw.js").catch(() => {})); }</script>
-</body>
-</html>
+<div class="app-shell">
+<header class="topbar"><div class="brand"><img src="assets/logos/logo-1-coin-growth.png" alt="Mein Budget Logo"><div><h1>Mein <span>Budget</span></h1><small>PLANEN · SPAREN · ERREICHEN</small></div></div><button class="icon-btn" id="settingsBtn" aria-label="Einstellungen">⚙</button></header>
+<main id="view" aria-live="polite"></main>
+<nav class="bottom-nav" aria-label="Hauptnavigation">
+<button data-page="home" class="active"><b>⌂</b><span>Übersicht</span></button>
+<button data-page="transactions"><b>⇄</b><span>Buchungen</span></button>
+<button data-page="budget"><b>▥</b><span>Budget</span></button>
+<button data-page="goals"><b>◎</b><span>Sparen</span></button>
+<button data-page="more"><b>•••</b><span>Mehr</span></button>
+</nav>
+</div>
+<dialog id="entryDialog"><form id="entryForm" method="dialog"><div class="dialog-head"><h2 id="dialogTitle">Buchung hinzufügen</h2><button type="button" class="icon-btn" id="closeDialog">✕</button></div><input type="hidden" id="entryId">
+<label>Art<select id="entryType"><option value="expense">Ausgabe</option><option value="income">Einnahme</option><option value="saving">Sparen</option></select></label>
+<label>Bezeichnung<input id="entryName" required maxlength="70" placeholder="z. B. Einkauf"></label>
+<div class="form-row"><label>Betrag (€)<input id="entryAmount" required type="number" min="0.01" step="0.01" inputmode="decimal"></label><label>Datum<input id="entryDate" type="date" required></label></div>
+<label>Kategorie<select id="entryCategory"><option>Wohnen</option><option>Lebensmittel</option><option>Auto</option><option>Freizeit</option><option>Versicherung</option><option>Gesundheit</option><option>Gehalt</option><option>Sparen</option><option>Sonstiges</option></select></label>
+<div class="form-row"><button type="button" class="btn secondary hidden" id="deleteEntry">Eintrag löschen</button><button type="submit" class="btn primary">Speichern</button></div>
+</form></dialog>
+<dialog id="genericDialog"><form method="dialog" id="genericForm"><div class="dialog-head"><h2 id="genericTitle">Hinzufügen</h2><button type="button" class="icon-btn" id="closeGeneric">✕</button></div><div id="genericFields"></div><button class="btn primary full" type="submit">Speichern</button></form></dialog>
+<script src="app.js"></script>
+</body></html>
